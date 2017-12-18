@@ -80,3 +80,17 @@ class EmbeddingsDictionary:
         _, neighbor_ids = self.emb2neighbors(self.emb[query_id], top_k + 1)
         neighbor_words = [self.words[i] for i in neighbor_ids if i != query_id]
         return neighbor_words
+
+
+    def find_comb_neighbors(self, comb_words, comb_op, top_k=10):
+        lst = [self.emb[self.dictionary[w]] for w in comb_words]
+        comb = lst[0]
+        for i, w in enumerate(lst[1:]):
+            comb = comb + w if comb_op[i] == '+' else comb - w
+        neigemb = self.emb2neighbors(comb, top_k)
+        words = [self.words[ind] for ind in neigemb[1]]
+        for i in range(len(words)):
+            if words[i] not in comb_words:
+                return words[i]
+        return ""
+
