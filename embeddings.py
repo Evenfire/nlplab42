@@ -89,10 +89,10 @@ class EmbeddingsDictionary:
             comb = comb + w if comb_op[i] == '+' else comb - w
         neigemb = self.emb2neighbors(comb, top_k)
         words = [self.words[ind] for ind in neigemb[1]]
-        for i in range(len(words)):
-            if words[i] not in comb_words:
-                return words[i]
+        for w in words:
+            if w not in comb_words: return w
         return ""
+
 
 
 
